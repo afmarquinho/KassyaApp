@@ -1,2 +1,2 @@
 # kassyaApp
-https://tranquil-cannoli-a43d18.netlify.app
+https://warm-manatee-36daea.netlify.app/
