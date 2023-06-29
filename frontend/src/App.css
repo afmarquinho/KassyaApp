@@ -1,0 +1,100 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;900&family=Numans&display=swap");
+
+:root {
+  --primario: #78909c;
+  --cyan: #00bcd4;
+  --negro: #000000;
+  --fuentePrincipal: "Inter", sans-serif;
+  --fuenteLogo: "Numans", sans-serif;
+}
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+body {
+  font-family: var(--fuentePrincipal);
+  font-size: 1.6rem;
+  line-height: 1.8;
+}
+h1,
+h2,
+h3 {
+  font-weight: 900;
+  margin: 2rem 0;
+}
+h1 {
+  font-size: 2rem;
+  font-family: var(--fuenteLogo);
+  color: #00bcd4;
+  font-weight: bold;
+}
+h2 {
+  font-size: 4.6rem;
+}
+h3 {
+  font-size: 3rem;
+}
+a {
+  text-decoration: none;
+}
+img {
+  max-width: 100%;
+  display: block;
+}
+/* UTLIDADES */
+.text-center {
+  text-align: center;
+}
+.contenedor {
+  max-width: 120rem;
+  margin: 0 auto;
+  width: 90%;
+}
+.form-contenedor {
+  background-image: url(./assets/fondo.jpg);
+}
+/* SPINNER */
+.loader {
+  width: 150px;
+  height: 150px;
+  background-color: #00bcd4;
+  border-radius: 50%;
+  position: relative;
+  box-shadow: 0 0 30px 4px rgba(0, 0, 0, 0.5) inset,
+    0 5px 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+.loader:before,
+.loader:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 45%;
+  top: -40%;
+  background-color: #fff;
+  animation: wave 5s linear infinite;
+}
+.loader:before {
+  border-radius: 30%;
+  background: rgba(255, 255, 255, 0.4);
+  animation: wave 5s linear infinite;
+}
+@keyframes wave {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* FIN SPINNER */
+.active {
+  background-color: red;
+}

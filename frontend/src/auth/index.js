@@ -1,0 +1,6 @@
+export {default as AuthLayout} from './layout/AuthLayout'
+export {default as AccountConfirmPage} from './pages/AccountConfirmPage'
+export {default as ForgotPage} from './pages/ForgotPage'
+export {default as LoginPage} from './pages/LoginPage'
+export {default as NewPasswordPage} from './pages/NewPasswordPage'
+export {default as RegisterPage} from './pages/RegisterPage'

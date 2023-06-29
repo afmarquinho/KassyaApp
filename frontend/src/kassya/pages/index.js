@@ -1,0 +1,12 @@
+export { default as AnalisisDatosPage } from "./AnalisisDatosPage";
+export { default as ClientesPage } from "./ClientesPage";
+export { default as ComprasPage } from "./ComprasPage";
+export { default as HomePage } from "./HomePage";
+export { default as InventariosPage } from "./InventariosPage";
+export { default as LogisticaPage } from "./LogisticaPage";
+export { default as MarketingPage } from "./MarketingPage";
+export { default as ProveedoresPage } from "./ProveedoresPage";
+export { default as ProyectosPage } from "./ProyectosPage";
+export { default as RRHHPage } from "./RRHHPage";
+export { default as ServicioClientePage } from "./ServicioClientePage";
+export { default as VentasPage } from "./VentasPage";
