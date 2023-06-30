@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
+
 const { Schema } = mongoose;
 
-const usuarioSchema = new Schema(
+const usuarioSchema = Schema(
   {
     nombre: {
       type: String,
@@ -32,6 +34,17 @@ const usuarioSchema = new Schema(
     timestamps: true,
   }
 );
+
+// hasheo del password, se ejecuta antes de guardar (prev)
+
+usuarioSchema.pre("save", async function (next) {
+  // evita el doble hasheo del password, esta sentencia ya está establecida
+  if (!this.isModified("password")) {
+    next(); //ejecuta el siguiente middleware
+  }
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+});
 
 const Usuario = mongoose.model("Usuario", usuarioSchema);
 export default Usuario;

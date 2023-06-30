@@ -3,6 +3,9 @@ import { registrar } from "../controllers/usuarioController.js";
 
 const router = express.Router();
 
+
+
+
 //Autenticación, registro y confirmacion de usuarios
 router.post("/",registrar);
 

@@ -5,6 +5,7 @@ import router from "./routes/usuariosRoutes.js";
 
 // crear el servidor de aexpress
 const app = express();
+app.use(express.json());
 dotenv.config();
 
 dbConnection();
