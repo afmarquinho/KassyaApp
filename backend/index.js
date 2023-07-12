@@ -1,7 +1,9 @@
 import express from "express";
 import dbConnection from "./database/config.js";
 import dotenv from "dotenv";
-import router from "./routes/usuariosRoutes.js";
+import usuarioRoutes from "./routes/usuariosRoutes.js";
+import proyectoRoutes from "./routes/proyectoRoutes.js";
+
 
 // crear el servidor de aexpress
 const app = express();
@@ -11,7 +13,8 @@ dotenv.config();
 dbConnection();
 
 // routing
-app.use("/api/usuarios", router);
+app.use("/api/usuarios", usuarioRoutes);
+app.use("/api/proyectos", proyectoRoutes);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {

@@ -96,11 +96,12 @@ const olvidePassword = async (req, res) => {
 };
 const comprobarToken = async (req, res) => {
   const { token } = req.params;
-  const usuario = await Usuario.findOne({ token });
-  if (usuario) {
-    res.json({ msg: "token valido" });
+  const tokenValido = await Usuario.findOne({ token });
+  if (tokenValido) {
+    res.json({ msg: "Token valido y el usuario existe" });
   } else {
-    res.status(404).json({ msg: "token no valido" });
+    const error = new Error("Token no válido");
+    res.status(404).json({ msg: error.message });
   }
 };
 
@@ -122,8 +123,10 @@ const nuevoPassword = async (req, res) => {
   }
 };
 
-const perfil = async (req, res) => {const {usuario} = req
-res.json(usuario)};
+const perfil = async (req, res) => {
+  const { usuario } = req;
+  res.json(usuario);
+};
 export {
   registrar,
   autenticar,

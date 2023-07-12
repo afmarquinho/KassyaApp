@@ -7,7 +7,7 @@ const dbConnection = async () => {
       useUnifiedTopology: true,
       // Otras opciones de configuración, si es necesario
     });
-    const url = `${connection.connection.host}:${connection.connection.port}: `;
+    const url = `${connection.connection.host}:${connection.connection.port} `;
     console.log(`MongoDb conectado en: ${url} `);
 
     console.log("Conexión exitosa a MongoDB!!!");
