@@ -1,9 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 
-const { Schema } = mongoose;
-
-const usuarioSchema = Schema(
+const usuarioSchema = mongoose.Schema(
   {
     nombre: {
       type: String,
@@ -21,7 +19,6 @@ const usuarioSchema = Schema(
       trim: true,
       unique: true,
     },
-
     token: {
       type: String,
     },
@@ -35,20 +32,19 @@ const usuarioSchema = Schema(
   }
 );
 
-// hasheo del password, se ejecuta antes de guardar (prev)
-
+//HASHEO DE LA CONTRASEÑA
 usuarioSchema.pre("save", async function (next) {
-  // evita el doble hasheo del password, esta sentencia ya está establecida
   if (!this.isModified("password")) {
-    next(); //ejecuta el siguiente middleware
+    next();
   }
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });
 
-usuarioSchema.methods.comprobarPassword = async function(passwordFormulario){
-  return await bcrypt.compare(passwordFormulario,this.password )
-} 
+//METODO PARA COMPARAR QUE EL PASSWORD SEA IGUAL AL QUE INTRODUCE EL USUARIO AL AUTENTICAR, POR ESO USA COMPARE
+usuarioSchema.methods.comprobarPassword = async function (passwordFormulario) {
+  return await bcrypt.compare(passwordFormulario, this.password);
+};
 
 const Usuario = mongoose.model("Usuario", usuarioSchema);
 export default Usuario;
