@@ -1,4 +1,5 @@
 import Proyecto from "../models/Proyecto.js";
+import Tarea from "../models/Tarea.js";
 import Usuario from "../models/Usuario.js";
 
 // const obtenerProyectosTodos = async (req, res) => { --> trae todos los proyectos
@@ -36,8 +37,9 @@ const obtenerProyecto = async (req, res) => {
     const error = new Error("Acción No Válida");
     return res.status(401).json({ msg: error.message });
   }
-
-  res.json(proyecto);
+  // LLAMAR LAS TAREAS ASOCIADAS AL PROYECTO, AUNQUE TAMBIEN SE PUEDE LLAMAR EN UNA FUNCION APARTE, LLAMADA OBTENER TAREAS.
+  const tareas = await Tarea.find().where("proyecto").equals(proyecto._id);
+  res.json({ proyecto, tareas });
 };
 
 const editarProyecto = async (req, res) => {
@@ -99,9 +101,6 @@ const agregarColaborador = async (req, res) => {
 const eliminarColaborador = async (req, res) => {
   console.log("desde eliminar colaborador");
 };
-const obtenerTareas = async (req, res) => {
-  console.log("desde obtener tarea");
-};
 
 export {
   obtenerProyectos,
@@ -111,5 +110,4 @@ export {
   eliminarProyecto,
   agregarColaborador,
   eliminarColaborador,
-  obtenerTareas,
 };

@@ -8,10 +8,8 @@ import {
   eliminarProyecto,
   agregarColaborador,
   eliminarColaborador,
-  obtenerTareas
 } from "../controllers/proyectoController.js";
 import checkAuth from "../middlewares/checkAuth.js";
-
 
 const router = express.Router();
 
@@ -26,9 +24,6 @@ router
   .put(checkAuth, editarProyecto)
   .delete(checkAuth, eliminarProyecto);
 
-
-router.get("/eliminar-colaborador/:id", checkAuth, obtenerTareas);
 router.post("/colaboradores/:id", checkAuth, agregarColaborador);
 router.post("/eliminar-colaborador/:id", checkAuth, eliminarColaborador);
 export default router;
-
