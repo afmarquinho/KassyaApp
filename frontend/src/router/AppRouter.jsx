@@ -25,7 +25,7 @@ const AppRouter = () => {
   const isAuthenticated = "not-authenticated"; //authenticated
   return (
     <Routes>
-      {isAuthenticated === "authenticated" ? (
+      {isAuthenticated === "not-authenticated" ? (
         // rutas del login con el estado no autenticado
         <Route>
           <Route path="auth/login" element={<LoginPage />} />

@@ -1,27 +1,58 @@
-import { Link } from "react-router-dom"
-import AuthLayout from "../layout/AuthLayout"
-
-
+import { Link } from "react-router-dom";
+import AuthLayout from "../layout/AuthLayout";
+import AuthContext from "../context/AuthContext";
+import { useContext, useState } from "react";
+import Alerta from "../components/Alerta";
 
 const RegisterPage = () => {
+  //VARIABLES
+  const { nombre, email, password, confirmaPassword, onInputChange } =
+    useContext(AuthContext);
+  const [alerta, setAlerta] = useState({});
+  const { msg } = alerta;
+
+  const onRegister = async() => {
+     //VALIDAR CAMPOS VACIOS
+     if ([nombre, email, password, confirmaPassword].includes("")) {
+      setAlerta({ msg: "*Diligencie todos los campos", warning: true });
+      return;
+    }
+    //VALIDAR COINCIDIR PASSWORDS
+    if (password !== confirmaPassword) {
+      setAlerta({ msg: "*Las contraselas no coinciden", warning: true });
+      return;
+    }
+    setAlerta("");
+    //CREANDO USUARIO EN LA API
+    try {
+      const respuesta = await axios.post("http://localhost:4000/api/usuarios",{
+        nombre, email, password
+      })
+      
+    } catch (error) {
+      
+    }
+    console.log("Creando usuario ");
+  };
+
   return (
     <>
       <AuthLayout title="Regístrate">
         <>
+          {msg && <Alerta mensajeAlerta={alerta} />}
           <div className="input-group">
-            <label className="user-label label" htmlFor="user">
+            <label className="user-label label" htmlFor="nombre">
               Usuario
             </label>
             <input
               type="text"
-              name="user"
+              name="nombre"
               className="user"
               placeholder="crea un usuario"
-              // value={displayName}
-              // onChange={onInputChange}
+              value={nombre}
+              onChange={onInputChange}
             />
           </div>
-          {/* <Error mensajeError ='Nombre no disponible'/> */}
 
           <div className="input-group">
             <label className="email-label label" htmlFor="email">
@@ -32,21 +63,34 @@ const RegisterPage = () => {
               name="email"
               className="email"
               placeholder="correo"
-              // value={email}
-              // onChange={onInputChange}
+              value={email}
+              onChange={onInputChange}
             />
           </div>
           <div className="input-group">
-            <label className="user-label label" htmlFor="user">
+            <label className="user-label label" htmlFor="password">
               Contraseña
             </label>
             <input
               type="password"
               name="password"
               className="password"
+              placeholder="contraseña"
+              value={password}
+              onChange={onInputChange}
+            />
+          </div>
+          <div className="input-group">
+            <label className="user-label label" htmlFor="confirmaPassword">
+              Contraseña
+            </label>
+            <input
+              type="password"
+              name="confirmaPassword"
+              className="password"
               placeholder="confirma contraseña"
-              // value={password}
-              // onChange={onInputChange}
+              value={confirmaPassword}
+              onChange={onInputChange}
             />
           </div>
           <div className="input-group">
@@ -55,7 +99,7 @@ const RegisterPage = () => {
               name="submit-register"
               className="submit-register"
               value="Registrarse"
-              // onClick={onRegister}
+              onClick={onRegister}
             />
           </div>
           <br />
@@ -73,9 +117,7 @@ const RegisterPage = () => {
         </>
       </AuthLayout>
     </>
-    
-  )
-}
+  );
+};
 
-export default RegisterPage
-
+export default RegisterPage;
