@@ -3,6 +3,7 @@ import AuthLayout from "../layout/AuthLayout";
 import AuthContext from "../context/AuthContext";
 import { useContext, useState } from "react";
 import Alerta from "../components/Alerta";
+import axios from "axios";
 
 const RegisterPage = () => {
   //VARIABLES
@@ -11,9 +12,9 @@ const RegisterPage = () => {
   const [alerta, setAlerta] = useState({});
   const { msg } = alerta;
 
-  const onRegister = async() => {
-     //VALIDAR CAMPOS VACIOS
-     if ([nombre, email, password, confirmaPassword].includes("")) {
+  const onRegister = async () => {
+    //VALIDAR CAMPOS VACIOS
+    if ([nombre, email, password, confirmaPassword].includes("")) {
       setAlerta({ msg: "*Diligencie todos los campos", warning: true });
       return;
     }
@@ -25,14 +26,15 @@ const RegisterPage = () => {
     setAlerta("");
     //CREANDO USUARIO EN LA API
     try {
-      const respuesta = await axios.post("http://localhost:4000/api/usuarios",{
-        nombre, email, password
-      })
-      
+      const { data } = await axios.post("http://localhost:4000/api/usuarios", {
+        nombre,
+        email,
+        password,
+      });
+      setAlerta({ msg: data.msg, ok: true });
     } catch (error) {
-      
+      console.log(error);
     }
-    console.log("Creando usuario ");
   };
 
   return (
