@@ -3,8 +3,10 @@ import { Contenedor } from "../styles/sedebar";
 
 const SideBar = () => {
   const navigate = useNavigate();
+  //TODO: BORRAR EL TOKEN DEL LOCAL STORAGE
   const onLogout = () => {
     navigate("auth/login");
+
   };
   return (
     <Contenedor>

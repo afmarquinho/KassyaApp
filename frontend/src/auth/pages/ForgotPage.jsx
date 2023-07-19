@@ -1,23 +1,22 @@
-import { Link } from "react-router-dom";
 import AuthLayout from "../layout/AuthLayout";
-import AuthContext from "../context/AuthContext";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import Alerta from "../components/Alerta";
 import clienteAxios from "../../config/clienteAxios";
+import useForm from "../helpers/useForm";
 
 const ForgotPage = () => {
-  const { email, onInputChange } = useContext(AuthContext);
+  const initialState = { email: "" };
+  const { formValues, onInputChange } = useForm(initialState);
+  const { email } = formValues;
   const [alerta, setAlerta] = useState({});
-  const { msg } = alerta;
 
   const onRecover = async () => {
-    //VALIDAR EL EMAIL POR UNA EXPRESION REGULAR
-    //TODO: VALIDAR EL EMAIL CON EXPRESION REGULAR
+    // *VALIDAR EMAIL NO ESTÉ VACÍO
     if (email === "") {
       setAlerta({ msg: "Introduzca un email válido", warning: true });
       return;
     }
-    // PASA LA VALIDACION ENVIAMOS EL EMAIL AL BACKEND
+    // *ENVIAR EL EMAIL AL BACKEND
     try {
       const { data } = await clienteAxios.post(`/usuarios/olvide-password`, {
         email,
@@ -27,14 +26,13 @@ const ForgotPage = () => {
         ok: true,
       });
     } catch (error) {
-      console.log();
       setAlerta({ msg: error.response.data.msg, error: true });
     }
   };
   return (
     <>
       <AuthLayout title="Restablecer">
-        {msg && <Alerta mensajeAlerta={alerta} />}
+        {alerta.msg && <Alerta mensajeAlerta={alerta} />}
         <>
           {" "}
           <div className="input-group">

@@ -3,22 +3,23 @@ import AuthLayout from "../layout/AuthLayout";
 import { useEffect, useState } from "react";
 import Alerta from "../components/Alerta";
 import clienteAxios from "../../config/clienteAxios";
+import useForm from "../helpers/useForm";
 
 const NewPasswordPage = () => {
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const initialValue = { password: "", confirmPassword: "" };
+  const { formValues, onInputChange, onReset } = useForm(initialValue);
+  const { password, confirmPassword } = formValues;
   const [alerta, setAlerta] = useState({});
-  const { msg } = alerta;
   const { token } = useParams();
   const [tokenValido, setTokenValido] = useState(false);
   const [passwordModificado, setPasswordModificado] = useState(false);
 
   useEffect(() => {
+    // *CONSULTA LA BBDD PARA VERIFICAR SI EL TOKEN ES VALIDO 
     const comprobarToken = async () => {
       try {
-        await clienteAxios.get(
-          `/usuarios/olvide-password/${token}`
-        );
+        await clienteAxios.get(`/usuarios/olvide-password/${token}`);
+        // *STATE PARA MOSTRAR EL FORMULARIO SI EL TOKEN ES VÁLIDO
         setTokenValido(true);
       } catch (error) {
         setAlerta({ msg: error.response.data.msg, error: true });
@@ -28,8 +29,8 @@ const NewPasswordPage = () => {
   }, []);
 
   const onResetPassword = async () => {
-    //VALIDAR QUE LOS CAMPOS SEAN IGUALES
     //TODO: VALIDAR LAS CONTRASEÑAS CON EXPRESION REGULAR
+    // *VALIDAR QUE LOS CAMPOS SEAN IGUALES Y NO ESTEN VACÍOS
     if ([password, confirmPassword].includes("")) {
       setAlerta({ msg: "No pueden haber campos vacíos", warning: true });
       return;
@@ -41,12 +42,12 @@ const NewPasswordPage = () => {
       });
       return;
     }
+    // *MANDA A BBDD NUEVO PASSWORD
     try {
       const url = `/usuarios/olvide-password/${token}`;
       const { data } = await clienteAxios.post(url, { password });
       setAlerta({ msg: data.msg, ok: true });
-      setPassword("");
-      setConfirmPassword("");
+      onReset(initialValue);
       setPasswordModificado(true);
     } catch (error) {
       setAlerta({ msg: error.response.data.msg, error: true });
@@ -56,37 +57,33 @@ const NewPasswordPage = () => {
   return (
     <>
       <AuthLayout title="Restablecer Contraseña">
-        {msg && <Alerta mensajeAlerta={alerta} />}
+        {alerta.msg && <Alerta mensajeAlerta={alerta} />}
         {tokenValido && (
           <>
             <div className="input-group">
-              <label className="password-label label" htmlFor="newPassword">
+              <label className="password-label label" htmlFor="password">
                 Password
               </label>
               <input
                 type="password"
+                name="password"
                 className="password"
                 placeholder="nueva contraseña"
-                name="newPassword"
                 value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
+                onChange={onInputChange}
               />
             </div>
             <div className="input-group">
-              <label className="password-label label" htmlFor="newPassword2">
+              <label className="password-label label" htmlFor="confirmPassword">
                 Password
               </label>
               <input
                 type="password"
+                name="confirmPassword"
                 className="password"
-                placeholder="confirmar contraseña"
-                name="newPassword2"
+                placeholder="confirma contraseña"
                 value={confirmPassword}
-                onChange={(e) => {
-                  setConfirmPassword(e.target.value);
-                }}
+                onChange={onInputChange}
               />
             </div>
             <div className="input-group">

@@ -1,18 +1,22 @@
 import { Link } from "react-router-dom";
 import AuthLayout from "../layout/AuthLayout";
 import { useContext, useState } from "react";
-import AuthContext from "../context/AuthContext";
 import Alerta from "../components/Alerta";
 import clienteAxios from "../../config/clienteAxios";
+import useForm from "../helpers/useForm";
+import AuthContext from "../context/AuthProvider";
 
 const LoginPage = () => {
-  const { email, password, onInputChange, isAuthenticated, authentication } =
-    useContext(AuthContext);
+  // *VARIABLES
+  const initialValue = { email: "", password: "" };
+  const { formValues, onInputChange } = useForm(initialValue);
+  const { email, password } = formValues;
   const [alerta, setAlerta] = useState("");
   const { msg } = alerta;
+  const { setAuth, setIsAuthenticated } = useContext(AuthContext);
 
   const onLogin = async () => {
-    //VALIDAR CAMPOS VACIOS
+    // *VALIDAR CAMPOS VACIOS
     if ([email, password].includes("")) {
       setAlerta({ msg: "No pueden haber campos vacíos", warning: true });
       return;
@@ -23,6 +27,10 @@ const LoginPage = () => {
         password,
       });
       localStorage.setItem("token", data.token);
+      setAuth(data);
+      if(data._id){
+        setIsAuthenticated(true)
+      }
     } catch (error) {
       setAlerta({ msg: error.response.data.msg, error: true });
     }

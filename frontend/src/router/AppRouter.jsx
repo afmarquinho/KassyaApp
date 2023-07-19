@@ -20,18 +20,23 @@ import {
   ServicioClientePage,
   VentasPage,
 } from "../kassya/pages";
+import { useContext } from "react";
+import AuthContext from "../auth/context/AuthProvider";
 
 const AppRouter = () => {
-  const isAuthenticated = "not-authenticated"; //authenticated
+  const { isAuthenticated } = useContext(AuthContext);
   return (
     <Routes>
-      {isAuthenticated === "not-authenticated" ? (
-        // rutas del login con el estado no autenticado
+      {isAuthenticated === false ? (
+        // *RUTAS DEL LOGIN NO AUTENTICADO
         <Route>
           <Route path="auth/login" element={<LoginPage />} />
           <Route path="auth/register" element={<RegisterPage />} />
           <Route path="auth/forgot" element={<ForgotPage />} />
-          <Route path="auth/new-password/:token" element={<NewPasswordPage />} />
+          <Route
+            path="auth/new-password/:token"
+            element={<NewPasswordPage />}
+          />
           <Route
             path="auth/account-confirmation/:token"
             element={<AccountConfirmPage />}
@@ -39,7 +44,7 @@ const AppRouter = () => {
           <Route path="/*" element={<Navigate to="auth/login" />} />
         </Route>
       ) : (
-        // rutas del login con el estado autenticado
+        // *RUTAS DE LA APP CUANDO ESTA AUTENTICADO
         <Route>
           <Route path="/" element={<HomePage />} />
           <Route path="analisis-datos" element={<AnalisisDatosPage />} />
@@ -57,7 +62,6 @@ const AppRouter = () => {
           <Route path="/*" element={<Navigate to="/" />} />
         </Route>
       )}
-    
     </Routes>
   );
 };

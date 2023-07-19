@@ -2,14 +2,15 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import KassyaApp from "./KassyaApp";
-import { AuthContextProvider } from "./auth/context/AuthContext";
+import { AuthProvider } from "./auth/context/AuthProvider";
+
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  // <React.StrictMode>
+  <React.StrictMode>
     <BrowserRouter>
-      <AuthContextProvider>
+      <AuthProvider>
         <KassyaApp />
-      </AuthContextProvider>
+      </AuthProvider>
     </BrowserRouter>
-  //  </React.StrictMode> 
+  </React.StrictMode>
 );

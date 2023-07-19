@@ -1,38 +1,44 @@
 import { Link } from "react-router-dom";
 import AuthLayout from "../layout/AuthLayout";
-import AuthContext from "../context/AuthContext";
-import { useContext, useState } from "react";
 import Alerta from "../components/Alerta";
 import clienteAxios from "../../config/clienteAxios";
-clienteAxios;
+import useForm from "../helpers/useForm";
+import { useState } from "react";
 
 const RegisterPage = () => {
-  //VARIABLES
-  const { nombre, email, password, confirmaPassword, onInputChange, onReset } =
-    useContext(AuthContext);
+  // *VARIABLES
+  const initialState = {
+    nombre: "",
+    email: "",
+    password: "",
+    confirmaPassword: "",
+  };
+
+  const { formValues, onInputChange, onReset } = useForm(initialState);
+  const { nombre, email, password, confirmaPassword } = formValues;
   const [alerta, setAlerta] = useState({});
-  const { msg } = alerta;
 
   const onRegister = async () => {
-    //VALIDAR CAMPOS VACIOS
+    //TODO: VALIDAR POR EXPRESION EL CORREOS Y EL PASSWORD
+    // *VALIDAR CAMPOS VACIOS
     if ([nombre, email, password, confirmaPassword].includes("")) {
       setAlerta({ msg: "*Diligencie todos los campos", warning: true });
       return;
     }
-    //VALIDAR COINCIDIR PASSWORDS
+    // *VALIDAR COINCIDIR PASSWORDS
     if (password !== confirmaPassword) {
       setAlerta({ msg: "*Las contraseñas no coinciden", warning: true });
       return;
     }
     setAlerta("");
-    //CREANDO USUARIO EN LA API
+    // *CREANDO USUARIO EN LA API
     try {
       const { data } = await clienteAxios.post(`/usuarios`, {
         nombre,
         email,
         password,
       });
-      onReset({ nombre: "", email: "", password: "", confirmaPassword: "" });
+      onReset(initialState);
       setAlerta({ msg: data.msg, ok: true });
     } catch (error) {
       setAlerta({ msg: error.response.data.msg, error: true });
@@ -43,7 +49,7 @@ const RegisterPage = () => {
     <>
       <AuthLayout title="Regístrate">
         <>
-          {msg && <Alerta mensajeAlerta={alerta} />}
+          {alerta.msg && <Alerta mensajeAlerta={alerta} />}
           <div className="input-group">
             <label className="user-label label" htmlFor="nombre">
               Usuario
