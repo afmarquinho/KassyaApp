@@ -17,8 +17,13 @@ const Div = styled.div`
     padding: 0 1rem 0 1rem;
   }
   .error {
+    font-size: 1.4rem;
     margin: 0;
     background-color: red;
+    color: white;
+    text-align: center;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
   }
 `;
 

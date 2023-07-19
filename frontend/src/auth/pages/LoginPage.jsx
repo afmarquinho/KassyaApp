@@ -1,12 +1,37 @@
 import { Link } from "react-router-dom";
 import AuthLayout from "../layout/AuthLayout";
-
+import { useContext, useState } from "react";
+import AuthContext from "../context/AuthContext";
+import Alerta from "../components/Alerta";
+import clienteAxios from "../../config/clienteAxios";
 
 const LoginPage = () => {
+  const { email, password, onInputChange, isAuthenticated, authentication } =
+    useContext(AuthContext);
+  const [alerta, setAlerta] = useState("");
+  const { msg } = alerta;
+
+  const onLogin = async () => {
+    //VALIDAR CAMPOS VACIOS
+    if ([email, password].includes("")) {
+      setAlerta({ msg: "No pueden haber campos vacíos", warning: true });
+      return;
+    }
+    try {
+      const { data } = await clienteAxios.post("/usuarios/login", {
+        email,
+        password,
+      });
+      localStorage.setItem("token", data.token);
+    } catch (error) {
+      setAlerta({ msg: error.response.data.msg, error: true });
+    }
+  };
   return (
     <>
       <AuthLayout title="Login">
         <>
+          {msg && <Alerta mensajeAlerta={alerta} />}
           <div className="input-group">
             <label className="email-label label" htmlFor="email">
               Usuario
@@ -16,8 +41,8 @@ const LoginPage = () => {
               name="email"
               className="email"
               placeholder="correo"
-              // value={email}
-              // onChange={onInputChange}
+              value={email}
+              onChange={onInputChange}
             />
           </div>
 
@@ -30,8 +55,8 @@ const LoginPage = () => {
               className="password"
               placeholder="contraseña"
               name="password"
-              // value={password}
-              // onChange={onInputChange}
+              value={password}
+              onChange={onInputChange}
             />
           </div>
           <input
@@ -40,7 +65,7 @@ const LoginPage = () => {
             className="btn-submit"
             name="submit"
             value="Iniciar Sesión"
-            // onClick={onLogin}
+            onClick={onLogin}
           />
           <div className="input-group">
             <button
@@ -48,7 +73,6 @@ const LoginPage = () => {
               type="button"
               name="btn-google"
               className="btn-google"
-              value="confirma contraseña"
               // onClick={onGoogleSignIn}
             >
               <svg
@@ -78,7 +102,7 @@ const LoginPage = () => {
               <p>Iniciar con Google</p>
             </button>
           </div>
-          <br/>
+          <br />
           <p className="ya-tienes-cuenta">
             ¿No tienes cuenta aún? <Link to="/auth/register">¡Regístrate!</Link>
           </p>

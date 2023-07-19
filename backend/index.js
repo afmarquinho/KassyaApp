@@ -14,7 +14,7 @@ dotenv.config();
 conectarDB();
 
 //CONFIRGURAR CORS
-const whiteList = ["http://http://localhost:5173"];
+const whiteList = [process.env.FRONTEND_URL];
 // const corsOption = {
 //   origin: function (origin, callback) {
 //     if (whiteList.includes(origin)) {
@@ -28,9 +28,11 @@ const whiteList = ["http://http://localhost:5173"];
 // };
 
 // app.use(cors(corsOption));
+
+
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: whiteList,
   })
 );
 app.use("/api/usuarios", usuarioRoutes);

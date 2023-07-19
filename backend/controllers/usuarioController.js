@@ -1,6 +1,7 @@
 import Usuario from "../models/Usuario.js";
 import generarTOKEN from "../helpers/generarTOKEN.js";
 import generarID from "../helpers/generarID.js";
+import { emailOlvidePassword, emailRegister } from "../helpers/email.js";
 
 const registrar = async (req, res) => {
   // Evitar registros duplicados
@@ -8,7 +9,7 @@ const registrar = async (req, res) => {
   const existeUsuario = await Usuario.findOne({ email });
 
   if (existeUsuario) {
-    const error = new Error("Usuario ya registrado");
+    const error = new Error("Correo ya registrado");
     return res.status(400).json({ msg: error.message });
   }
 
@@ -16,7 +17,12 @@ const registrar = async (req, res) => {
     const usuario = new Usuario(req.body);
     usuario.token = generarID();
     await usuario.save();
-
+    // ENVIAR EMAIL DE CONFIRMACION
+    emailRegister({
+      nombre: usuario.nombre,
+      email: usuario.email,
+      token: usuario.token,
+    });
     res.json({
       msg: "Usuario Creado Correctamente, Revisa tu Email para confirmar tu cuenta",
     });
@@ -75,22 +81,28 @@ const confirmar = async (req, res) => {
 const olvidePassword = async (req, res) => {
   const { email } = req.body;
   const usuario = await Usuario.findOne({ email });
+
   if (!usuario) {
     const error = new Error("El Usuario no existe");
     return res.status(404).json({ msg: error.message });
   }
 
   try {
-    usuario.token = generarId();
+    usuario.token = generarID();
     await usuario.save();
 
-    // // Enviar el email
+    // Enviar el email
     // emailOlvidePassword({
     //   email: usuario.email,
     //   nombre: usuario.nombre,
     //   token: usuario.token,
     // });
-
+    //ENVIAR EMAIL
+    emailOlvidePassword({
+      nombre: usuario.nombre,
+      email: usuario.email,
+      token: usuario.token,
+    });
     res.json({ msg: "Hemos enviado un email con las instrucciones" });
   } catch (error) {
     console.log(error);

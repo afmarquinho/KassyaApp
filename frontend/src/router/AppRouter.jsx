@@ -31,9 +31,9 @@ const AppRouter = () => {
           <Route path="auth/login" element={<LoginPage />} />
           <Route path="auth/register" element={<RegisterPage />} />
           <Route path="auth/forgot" element={<ForgotPage />} />
-          <Route path="auth/new-password" element={<NewPasswordPage />} />
+          <Route path="auth/new-password/:token" element={<NewPasswordPage />} />
           <Route
-            path="auth/account-confirmation"
+            path="auth/account-confirmation/:token"
             element={<AccountConfirmPage />}
           />
           <Route path="/*" element={<Navigate to="auth/login" />} />

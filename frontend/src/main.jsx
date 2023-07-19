@@ -5,11 +5,11 @@ import KassyaApp from "./KassyaApp";
 import { AuthContextProvider } from "./auth/context/AuthContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <BrowserRouter>
       <AuthContextProvider>
         <KassyaApp />
       </AuthContextProvider>
     </BrowserRouter>
-  </React.StrictMode>
+  //  </React.StrictMode> 
 );

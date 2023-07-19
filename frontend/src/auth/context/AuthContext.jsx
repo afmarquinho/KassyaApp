@@ -1,20 +1,36 @@
 import { createContext } from "react";
 import useForm from "../helpers/useForm";
-const AuthContext = createContext();
+import { useState } from "react";
 
+const AuthContext = createContext();
 const AuthContextProvider = ({ children }) => {
-  const initialState = {
+  const initialValue = {
     nombre: "",
     email: "",
     password: "",
     confirmaPassword: "",
   };
 
-  const { formValues, onInputChange, onReset } = useForm(initialState);
-  const {nombre, email, password, confirmaPassword} = formValues
+  const { formValues, onInputChange, onReset } = useForm(initialValue);
+  const { nombre, email, password, confirmaPassword } = formValues;
+  const [isAuthenticated, seTisAuthenticated] = useState(false);
+  const authentication = () => {
+    seTisAuthenticated(!isAuthenticated);
+  };
 
   return (
-    <AuthContext.Provider value={{ nombre, email, password, confirmaPassword, onInputChange, onReset }}>
+    <AuthContext.Provider
+      value={{
+        nombre,
+        email,
+        password,
+        confirmaPassword,
+        onInputChange,
+        onReset,
+        isAuthenticated,
+        authentication,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

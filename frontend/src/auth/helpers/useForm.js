@@ -7,12 +7,12 @@ const useForm = (initialValue = {}) => {
     setFormValues((prevValues) => ({ ...prevValues, [name]: value }));
     // setFormValues({...formValues, [name]: value });
   };
-
-  const onReset = () => {
-    setFormValues({});
+  const onReset = (initialValue) => {
+    setFormValues(initialValue)
   };
+ 
 
-  return { formValues, onInputChange,onReset };
+  return { formValues, onInputChange, onReset };
 };
 
 export default useForm;

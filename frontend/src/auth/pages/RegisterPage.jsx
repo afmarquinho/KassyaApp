@@ -3,11 +3,12 @@ import AuthLayout from "../layout/AuthLayout";
 import AuthContext from "../context/AuthContext";
 import { useContext, useState } from "react";
 import Alerta from "../components/Alerta";
-import axios from "axios";
+import clienteAxios from "../../config/clienteAxios";
+clienteAxios;
 
 const RegisterPage = () => {
   //VARIABLES
-  const { nombre, email, password, confirmaPassword, onInputChange } =
+  const { nombre, email, password, confirmaPassword, onInputChange, onReset } =
     useContext(AuthContext);
   const [alerta, setAlerta] = useState({});
   const { msg } = alerta;
@@ -20,20 +21,21 @@ const RegisterPage = () => {
     }
     //VALIDAR COINCIDIR PASSWORDS
     if (password !== confirmaPassword) {
-      setAlerta({ msg: "*Las contraselas no coinciden", warning: true });
+      setAlerta({ msg: "*Las contraseñas no coinciden", warning: true });
       return;
     }
     setAlerta("");
     //CREANDO USUARIO EN LA API
     try {
-      const { data } = await axios.post("http://localhost:4000/api/usuarios", {
+      const { data } = await clienteAxios.post(`/usuarios`, {
         nombre,
         email,
         password,
       });
+      onReset({ nombre: "", email: "", password: "", confirmaPassword: "" });
       setAlerta({ msg: data.msg, ok: true });
     } catch (error) {
-      console.log(error);
+      setAlerta({ msg: error.response.data.msg, error: true });
     }
   };
 
