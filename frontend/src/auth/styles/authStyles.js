@@ -111,24 +111,23 @@ export const Contenedor = styled.div`
     .nota-recuperacion {
       line-height: 1.5rem;
       font-size: 1.4rem;
-      margin:1.5rem 0 0 0;
+      margin: 1.5rem 0 0 0;
     }
-    .confirmacion{
-      span{
+    .confirmacion {
+      span {
         font-weight: bold;
         color: black;
         font-size: 1.8rem;
       }
     }
-    .btn-confirmacion{
+    .btn-confirmacion {
       margin: 1.5rem 0;
       width: 100%;
       background-color: transparent;
       border: none;
-      :hover{
+      :hover {
         cursor: pointer;
       }
-      
     }
   }
 `;
