@@ -11,6 +11,7 @@ const SideBar = () => {
   return (
     <Contenedor>
       <div className="subcontenedor">
+        {/* //TODO: CAMBIAR USUARIO POR EL NOMBRE DEL USUARIO CON EL STATE AUTH O DATOS DEL LOGIN */}
         <p className="sidebarelement usuario">USUARIO</p>
         <p className=" sidebarelement modulo">MODULO</p>
         <NavLink

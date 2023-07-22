@@ -7,6 +7,7 @@ const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const [auth, setAuth] = useState({});
+  
   useEffect(() => {
     const autenticarUsuario = async () => {
       const token = localStorage.getItem("token");
@@ -16,9 +17,10 @@ const AuthProvider = ({ children }) => {
       }
 
       try {
+      
         const config = {
           headers: {
-            "Content-Type": "application/jason",
+            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
         };
