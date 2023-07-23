@@ -1,39 +1,33 @@
-import { useContext } from "react";
-import { Form, Titulo } from "./styles/nuevoProyecto.styles";
+import { useContext, useEffect } from "react";
+import Navbar from "../../layout/Navbar";
 import ProyectosContext from "../../context/ProyectosProvider";
 import useForm from "../../../auth/helpers/useForm";
 import Alerta from "../../../auth/components/Alerta";
-import { areValuesNotEmpty, isFutureDate } from "../../helpers";
-import Navbar from "../../layout/Navbar";
 
-
-const NuevoProyecto = () => {
-  //*VARIABLES
-  // ? PASO EL INNITIAL VALUES EL CONTEXT PARA SIMPLIFICAR EL COMPONENTE
-  const { initialValues, proyectos, alerta, setAlerta, submitProyecto } =
+const EditarProyecto = () => {
+  const { proyecto, initialValues, submitProyecto, setAlerta, alerta } =
     useContext(ProyectosContext);
-  const { formValues, onInputChange, onReset } = useForm(initialValues);
+  const valoresPrevios = {
+    id: proyecto._id,
+    nombre: proyecto.nombre,
+    descripcion: proyecto.descripcion,
+    tipoCliente: "",
+    cliente: proyecto.cliente,
+    fechaEntrega: proyecto.fechaEntrega.split("T")[0],
+    presupuesto: "",
+    recursos: "",
+    ubicacion: "",
+    prioridad: "",
+    tipo: "",
+    otroTipo: "",
+    alcance: "",
+    notaAdicional: "",
+  };
+  const { formValues, onInputChange, onReset } = useForm(valoresPrevios);
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    //*VALIDACIONES
-    const notEmpty = areValuesNotEmpty(formValues); //* CAMPOS NO VACÍOS
-    if (!notEmpty) {
-      setAlerta({
-        msg: "Debe diligenciar todos los campos",
-        error: true,
-      });
-      return;
-    }
-    //TODO: VALIDAR QUE EL PRESUPUESTO NO SEA NEGATIVO
-    const futureDate = isFutureDate(formValues.fechaEntrega); //* FECHA SEA FUTURA
-    if (!futureDate) {
-      setAlerta({
-        msg: "Introduzca una fecha válida",
-        error: true,
-      });
-      return;
-    }
+
     formValues.nombre = formValues.nombre.trim().toUpperCase();
     formValues.descripcion = formValues.descripcion.trim();
     formValues.cliente = formValues.cliente.trim().toUpperCase();
@@ -43,28 +37,25 @@ const NuevoProyecto = () => {
     formValues.otroTipo = formValues.otroTipo.trim();
     formValues.notaAdicional = formValues.notaAdicional.trim();
 
+    //TODO: ENVIAR TODOS LOS CAMPOS DEL PROYECTO Y MODIFICAR EL CHEMA DE PROYECTOS.
+    const { id, nombre, descripcion, fechaEntrega, cliente } = formValues;
+    // TODO: SE ELIMINA EL CONST DE ARRIBA Y SE PASA TODO EL FORMVALUES
     setAlerta({
-      msg: "¡Proyecto creado con éxito!",
+      msg: "¡Proyecto editado!",
       ok: true,
     });
-    
-    //TODO: ENVIAR TODOS LOS CAMPOS DEL PROYECTO Y MODIFICAR EL CHEMA DE PROYECTOS.
-    const {nombre, descripcion, fechaEntrega, cliente} = formValues
-    // TODO: SE ELIMINA EL CONST DE ARRIBA Y SE PASA TODO EL FORMVALUES
-   
-    await submitProyecto({ nombre, descripcion, fechaEntrega, cliente});
-     //?COMO ES UNA FUNCION ASYNC (EN EL PROVIDER), ESPERO QUE SE EJECUTE CON EXITO LA CONSULTA DE LA API Y RESETEO EL FOMULARIO
+
+    await submitProyecto({ id, nombre, descripcion, fechaEntrega, cliente });
+    //?COMO ES UNA FUNCION ASYNC (EN EL PROVIDER), ESPERO QUE SE EJECUTE CON EXITO LA CONSULTA DE LA API Y RESETEO EL FOMULARIO
     setTimeout(() => {
       setAlerta({}), onReset(initialValues);
-    }, 3000)
-    
+    }, 3000);
   };
-
   return (
     <>
-    <Navbar title="PROYECTOS" ruta="/proyectos"/>
-      <Form className="nuevo-proyecto" onSubmit={onSubmit}>
-        <Titulo className="titulo">Nuevo Proyecto</Titulo>
+      <Navbar title="PROYECTOS" ruta="/proyectos" />
+      <form className="nuevo-proyecto" onSubmit={onSubmit}>
+        <h4 className="titulo">Nuevo Proyecto</h4>
         {alerta.msg && <Alerta mensajeAlerta={alerta} />}
         <div className="contenedor">
           <div className="contenedor1">
@@ -240,9 +231,9 @@ const NuevoProyecto = () => {
           </svg>
           <p>Cancelar</p>
         </button>
-      </Form>
+      </form>
     </>
   );
 };
 
-export default NuevoProyecto;
+export default EditarProyecto;

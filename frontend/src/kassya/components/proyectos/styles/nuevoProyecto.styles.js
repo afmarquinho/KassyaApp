@@ -42,6 +42,7 @@ export const Form = styled.form`
       border: none;
       font-size: 1.5rem;
       background-color: #f1eded;
+      outline: none; /* Quita el contorno del botón al hacer clic */
     }
     .descripcion {
       resize: none;
@@ -89,7 +90,7 @@ export const Form = styled.form`
     border: none;
     color: white;
     transition: all 0.3s ease-out;
-    top: 1rem;
+    bottom: 1rem;
     right:1rem;
     text-align: center;
     display: flex;

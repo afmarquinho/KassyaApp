@@ -22,6 +22,11 @@ import {
 } from "../kassya/pages";
 import { useContext } from "react";
 import AuthContext from "../auth/context/AuthProvider";
+import { NuevoProyecto } from "../kassya/components/proyectos";
+import MisProyectos from "../kassya/components/proyectos/MisProyectos";
+import Proyecto from "../kassya/components/proyectos/Proyecto";
+import EditarProyecto from "../kassya/components/proyectos/EditarProyecto";
+
 
 const AppRouter = () => {
   const { isAuthenticated } = useContext(AuthContext);
@@ -54,11 +59,17 @@ const AppRouter = () => {
           <Route path="logistica" element={<LogisticaPage />} />
           <Route path="marketing" element={<MarketingPage />} />
           <Route path="proveedores" element={<ProveedoresPage />} />
-          <Route path="proyectos" element={<ProyectosPage />} />
+          <Route path="proyectos" element={<ProyectosPage />}>
+            {/* <Route path="nuevo-proyecto" element={<NuevoProyecto />} /> */}
+            {/* <Route path="mis-proyectos" element={<MisProyectos />} /> */}
+          </Route>
+          <Route path="proyectos/nuevo-proyecto" element={<NuevoProyecto />} />
+          <Route path="proyectos/mis-proyectos" element={<MisProyectos />} />
+          <Route path="proyectos/mis-proyectos/proyecto/:id" element={<Proyecto />} />
+          <Route path="proyecto/editar/:id" element={<EditarProyecto />} />
           <Route path="RRHH" element={<RRHHPage />} />
           <Route path="serv-cliente" element={<ServicioClientePage />} />
           <Route path="ventas" element={<VentasPage />} />
-
           <Route path="/*" element={<Navigate to="/" />} />
         </Route>
       )}

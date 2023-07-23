@@ -39,7 +39,7 @@ const obtenerProyecto = async (req, res) => {
   }
   // LLAMAR LAS TAREAS ASOCIADAS AL PROYECTO, AUNQUE TAMBIEN SE PUEDE LLAMAR EN UNA FUNCION APARTE, LLAMADA OBTENER TAREAS.
   const tareas = await Tarea.find().where("proyecto").equals(proyecto._id);
-  res.json({ proyecto, tareas });
+  res.json(proyecto);
 };
 
 const editarProyecto = async (req, res) => {
