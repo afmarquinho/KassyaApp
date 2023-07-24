@@ -22,7 +22,9 @@ const ProyectosProvider = ({ children }) => {
   const [alerta, setAlerta] = useState({}); //* PARA LA ALERTA DEL ERROR
   const [proyecto, setProyecto] = useState({});
   const [cargando, setCargando] = useState(false); //TODO: PONER SPINNER CON ESTE STATE EN TRUE
+  const [mostrarModal, setMostrarModal] = useState(false); //*MODAL DEL FORMULARIO DE TAREAS
 
+  //*BLOQUE DE PROYECTOS
   const submitProyecto = async (proyecto) => {
     if (proyecto.id) {
       editarProyecto(proyecto);
@@ -70,7 +72,7 @@ const ProyectosProvider = ({ children }) => {
       const proyectosActualizados = proyecto.map((proyectoState) =>
         proyectoState._id === data._id ? data : proyectoState
       );
-      setProyectos(proyectosActualizados)
+      setProyectos(proyectosActualizados);
     } catch (error) {}
   };
 
@@ -94,6 +96,45 @@ const ProyectosProvider = ({ children }) => {
     }
   };
 
+  const eliminarProyecto = async (id) => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await clienteAxios.delete(`/proyectos/${id}`, config);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const cambiarModal = () => {
+    setMostrarModal(false);
+  };
+  //*BLOQUE DE TAREAS
+
+  const submitTarea = async (tarea) => {
+    console.log(tarea)
+    try {
+     const token = localStorage.getItem("token");
+     if (!token) return;
+      const config = {
+         headers: {
+           "Content-Type": "application/json",
+           Authorization: `Bearer ${token}`,
+         },
+      };
+       const { data } = await clienteAxios.post("/tareas", tarea, config);
+    //   console.log(data)
+     } catch (error) {
+    //   console.log(error);
+     }
+  };
   return (
     <ProyectosContext.Provider
       value={{
@@ -106,6 +147,11 @@ const ProyectosProvider = ({ children }) => {
         obtenerProyecto,
         proyecto,
         cargando,
+        eliminarProyecto,
+        mostrarModal,
+        setMostrarModal,
+        cambiarModal,
+        submitTarea,
       }}
     >
       {children}

@@ -3,6 +3,7 @@ import Navbar from "../../layout/Navbar";
 import ProyectosContext from "../../context/ProyectosProvider";
 import useForm from "../../../auth/helpers/useForm";
 import Alerta from "../../../auth/components/Alerta";
+import { useNavigate } from "react-router-dom";
 
 const EditarProyecto = () => {
   const { proyecto, initialValues, submitProyecto, setAlerta, alerta } =
@@ -24,7 +25,7 @@ const EditarProyecto = () => {
     notaAdicional: "",
   };
   const { formValues, onInputChange, onReset } = useForm(valoresPrevios);
-
+const navigate = useNavigate()
   const onSubmit = async (e) => {
     e.preventDefault();
 
@@ -51,10 +52,14 @@ const EditarProyecto = () => {
       setAlerta({}), onReset(initialValues);
     }, 3000);
   };
+  const onCancel = () => {
+    
+    navigate(-1)
+  };
   return (
     <>
       <Navbar title="PROYECTOS" ruta="/proyectos" />
-      <form className="nuevo-proyecto" onSubmit={onSubmit}>
+      <form className="editar-proyecto" onSubmit={onSubmit}>
         <h4 className="titulo">Nuevo Proyecto</h4>
         {alerta.msg && <Alerta mensajeAlerta={alerta} />}
         <div className="contenedor">
@@ -217,9 +222,9 @@ const EditarProyecto = () => {
           </div>
         </div>
         <div className="input-btn">
-          <input type="submit" value="CREAR" className="btn-crear" />
+          <input type="submit" value="EDITAR" className="btn-edtiar" />
         </div>
-        <button className="btn-cancelar">
+        <button type="button" className="btn-cancelar" onClick={onCancel}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="#ffffff"

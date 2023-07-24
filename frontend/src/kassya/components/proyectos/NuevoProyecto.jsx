@@ -5,6 +5,7 @@ import useForm from "../../../auth/helpers/useForm";
 import Alerta from "../../../auth/components/Alerta";
 import { areValuesNotEmpty, isFutureDate } from "../../helpers";
 import Navbar from "../../layout/Navbar";
+import { useNavigate } from "react-router-dom";
 
 
 const NuevoProyecto = () => {
@@ -13,6 +14,7 @@ const NuevoProyecto = () => {
   const { initialValues, proyectos, alerta, setAlerta, submitProyecto } =
     useContext(ProyectosContext);
   const { formValues, onInputChange, onReset } = useForm(initialValues);
+  const navigate = useNavigate()
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -58,6 +60,10 @@ const NuevoProyecto = () => {
       setAlerta({}), onReset(initialValues);
     }, 3000)
     
+  };
+  const onCancel = () => {
+    
+    navigate(-1)
   };
 
   return (
@@ -228,7 +234,7 @@ const NuevoProyecto = () => {
         <div className="input-btn">
           <input type="submit" value="CREAR" className="btn-crear" />
         </div>
-        <button className="btn-cancelar">
+        <button type="button" className="btn-cancelar" onClick={onCancel}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="#ffffff"

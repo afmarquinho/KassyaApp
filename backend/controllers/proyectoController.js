@@ -7,7 +7,10 @@ import Usuario from "../models/Usuario.js";
 // };
 
 const obtenerProyectos = async (req, res) => {
-  const proyectos = await Proyecto.find().where("creador").equals(req.usuario);
+  const proyectos = await Proyecto.find()
+    .where("creador")
+    .equals(req.usuario)
+    .select("-tareas"); //* AL NO TRAIGO LAS TAREAS PORQIE NO LAS NECESITO, ES INFO DE MAS ENTRE MAS LIGERO ES EL REQUEST MAS LIGERA EN MI APP
   res.json(proyectos);
 };
 
@@ -26,7 +29,7 @@ const nuevoProyecto = async (req, res) => {
 const obtenerProyecto = async (req, res) => {
   const { id } = req.params;
 
-  const proyecto = await Proyecto.findById(id);
+  const proyecto = await Proyecto.findById(id).populate("tareas"); //?POPULATE MUESTRA EL OBJETO DE LAS TAREAS Y NO SOLO EL ID
 
   if (!proyecto) {
     const error = new Error("No Encontrado");

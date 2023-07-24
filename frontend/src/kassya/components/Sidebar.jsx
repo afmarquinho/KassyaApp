@@ -1,12 +1,20 @@
 import { Link as NavLink, useNavigate } from "react-router-dom";
 import { Contenedor } from "../styles/sedebar";
+import { useContext } from "react";
+import AuthContext from "../../auth/context/AuthProvider";
 
 const SideBar = () => {
+  //*VARIABLES
+
+  const { setIsAuthenticated } = useContext(AuthContext);
+
   const navigate = useNavigate();
+
   //TODO: BORRAR EL TOKEN DEL LOCAL STORAGE
   const onLogout = () => {
     navigate("auth/login");
-
+    localStorage.setItem('token',"")
+    setIsAuthenticated(false);
   };
   return (
     <Contenedor>

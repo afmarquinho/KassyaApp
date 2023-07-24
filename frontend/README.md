@@ -1,2 +1,2 @@
 # kassyaApp
-https://warm-manatee-36daea.netlify.app/
+https://vermillion-praline-94bcca.netlify.app/auth/login
