@@ -1,15 +1,16 @@
 import styled from "@emotion/styled";
 import useForm from "../../../auth/helpers/useForm";
-import { areValuesNotEmpty, isFutureDate } from "../../helpers";
 import Alerta from "../../../auth/components/Alerta";
 import { useContext } from "react";
 import ProyectosContext from "../../context/ProyectosProvider";
 import { useParams } from "react-router-dom";
+import { areValuesNotEmpty } from "../../helpers/areValuesNotEmpty";
+import { isFutureDate } from "../../helpers/isFutureDate";
 
 const ModalTarea = ({ titulo = "Alerta" }) => {
   const { mostrarModal, cambiarModal, setAlerta, alerta, submitTarea } =
     useContext(ProyectosContext);
-  const PRIORIDAD = ["Baja", "Medio", "Alata"];
+  const PRIORIDAD = ["Baja", "Medio", "Alta"];
   const initialValues = {
     nombre: "",
     descripcion: "",
@@ -19,7 +20,7 @@ const ModalTarea = ({ titulo = "Alerta" }) => {
   const param = useParams();
 
   //*FUNCIONES
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     //*VALIDACIONES
     const notEmpty = areValuesNotEmpty(formValues); //* CAMPOS NO VACÍOS
@@ -46,7 +47,7 @@ const ModalTarea = ({ titulo = "Alerta" }) => {
       msg: "¡Tarea guardada con éxito!",
       ok: true,
     });
-    submitTarea(formValues);
+    await submitTarea(formValues);
     setTimeout(() => {
       setAlerta({}), onReset(initialValues);
       cambiarModal();

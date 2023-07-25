@@ -1,7 +1,43 @@
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 
+const Navbar = ({ children, title = "", ruta = "/" }) => {
+  return (
+    <>
+      <Contenedor className="navBar-container">
+      <P>NOMBRE</P>
+        <h4 className="titulo-modulo">{title}</h4>
+        <div className="sub-contenedor">
+          <h1 className="kassya-name">Kassya</h1>
+          <h2 className="cliente-name">Tu Empresa</h2>
+          <Link className="home" to={ruta}>
+            <p>Home</p>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="25"
+              viewBox="0 -960 960 960"
+              width="25"
+            >
+              <path
+                d="M220-180h150v-250h220v250h150v-390L480-765 220-570v390Zm-60 60v-480l320-240 320 240v480H530v-250H430v250H160Zm320-353Z"
+                fill="white"
+              />
+            </svg>
+          </Link>
+        </div>
+      </Contenedor>
+
+      <Main>{children}</Main>
+    </>
+  );
+};
+
+export default Navbar;
+
 const P = styled.p`
+  position: fixed;
+  top: 0;
+  left:0;
   background-color: #4fc3f7;
   text-align: center;
   line-height: 4rem;
@@ -21,6 +57,7 @@ const Main = styled.main`
   }
 `;
 const Contenedor = styled.div`
+  position: fixed;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -29,10 +66,9 @@ const Contenedor = styled.div`
   background-color: #3f51b5;
   background-color: #455a64;
   padding-right: 3rem;
-  position: fixed;
   right: 0;
   top: 0;
-  z-index: 100;
+  z-index: 200;
   width: calc(100% - 12rem);
   @media (min-width: 768px) {
     width: calc(100% - 15rem);
@@ -44,7 +80,7 @@ const Contenedor = styled.div`
     color: white;
     font-size: 1.2rem;
     @media (min-width: 768px) {
-        font-size:1.6rem;
+      font-size: 1.6rem;
     }
   }
   .sub-contenedor {
@@ -83,34 +119,3 @@ const Contenedor = styled.div`
     }
   }
 `;
-const Navbar = ({ children, title = "", ruta="/"}) => {
-  return (
-    <>
-      <Contenedor className="navBar-container">
-        <h4 className="titulo-modulo">{title}</h4>
-        <div className="sub-contenedor">
-          <h1 className="kassya-name">Kassya</h1>
-          <h2 className="cliente-name">Tu Empresa</h2>
-          <Link className="home" to={ruta}>
-            <p>Home</p>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="25"
-              viewBox="0 -960 960 960"
-              width="25"
-            >
-              <path
-                d="M220-180h150v-250h220v250h150v-390L480-765 220-570v390Zm-60 60v-480l320-240 320 240v480H530v-250H430v250H160Zm320-353Z"
-                fill="white"
-              />
-            </svg>
-          </Link>
-        </div>
-      </Contenedor>
-      <P>NOMBRE</P>
-      <Main>{children}</Main>
-    </>
-  );
-};
-
-export default Navbar;

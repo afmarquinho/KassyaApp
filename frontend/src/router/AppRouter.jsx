@@ -22,7 +22,6 @@ import {
 } from "../kassya/pages";
 import { useContext } from "react";
 import AuthContext from "../auth/context/AuthProvider";
-import { NuevoProyecto } from "../kassya/components/proyectos";
 import MisProyectos from "../kassya/components/proyectos/MisProyectos";
 import Proyecto from "../kassya/components/proyectos/Proyecto";
 import EditarProyecto from "../kassya/components/proyectos/EditarProyecto";
@@ -63,7 +62,6 @@ const AppRouter = () => {
             {/* <Route path="nuevo-proyecto" element={<NuevoProyecto />} /> */}
             {/* <Route path="mis-proyectos" element={<MisProyectos />} /> */}
           </Route>
-          <Route path="proyectos/nuevo-proyecto" element={<NuevoProyecto />} />
           <Route path="proyectos/mis-proyectos" element={<MisProyectos />} />
           <Route path="proyectos/mis-proyectos/proyecto/:id" element={<Proyecto />} />
           <Route path="proyecto/editar/:id" element={<EditarProyecto />} />

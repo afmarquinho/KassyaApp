@@ -4,20 +4,7 @@ import clienteAxios from "../../../config/clienteAxios";
 import ProyectosContext from "../../context/ProyectosProvider";
 import styled from "@emotion/styled";
 import PreviewProyectos from "./PreviewProyectos";
-const Div = styled.div`
-  width: 90%;
-  max-width: 120rem;
-  margin: 1rem auto;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  .no-proyectos {
-    margin: 0;
-    font-size: 2rem;
-    font-style: italic;
-    font-weight: 900;
-  }
-`;
+
 const MisProyectos = () => {
   //?SACO EL USEEFFECT DEL PROVIDER PORQUE QUIERO OBTENER PROYECTOS SOLO ALENTRAR A ESTE MODULO, NO AL CARGAR LA APLICACION
   const { setProyectos, proyectos } = useContext(ProyectosContext);
@@ -59,3 +46,18 @@ const MisProyectos = () => {
 };
 
 export default MisProyectos;
+const Div = styled.div`
+  width: 90%;
+  max-width: 120rem;
+  margin: 1rem auto;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-top:5rem;
+  .no-proyectos {
+    margin: 0;
+    font-size: 2rem;
+    font-style: italic;
+    font-weight: 900;
+  }
+`;

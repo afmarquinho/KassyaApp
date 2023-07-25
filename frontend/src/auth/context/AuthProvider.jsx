@@ -30,9 +30,7 @@ const AuthProvider = ({ children }) => {
         if (data.usuario._id) {
           setIsAuthenticated(true);
         }
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     };
     autenticarUsuario();
   }, []);

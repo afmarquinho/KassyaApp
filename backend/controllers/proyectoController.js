@@ -41,7 +41,7 @@ const obtenerProyecto = async (req, res) => {
     return res.status(401).json({ msg: error.message });
   }
   // LLAMAR LAS TAREAS ASOCIADAS AL PROYECTO, AUNQUE TAMBIEN SE PUEDE LLAMAR EN UNA FUNCION APARTE, LLAMADA OBTENER TAREAS.
-  const tareas = await Tarea.find().where("proyecto").equals(proyecto._id);
+  // const tarea= await Tarea.find().where("proyecto").equals(proyecto._id); ya no necesito esta linea con el populate traigo las tereas de este proyecto
   res.json(proyecto);
 };
 

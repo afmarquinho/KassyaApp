@@ -3,6 +3,7 @@ import ProyectosContext from "../../context/ProyectosProvider";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Navbar from "../../layout/Navbar";
 import ModalTarea from "./ModalTarea";
+import TareaPreview from "./TareaPreview";
 
 const Proyecto = () => {
   const {
@@ -14,11 +15,13 @@ const Proyecto = () => {
   } = useContext(ProyectosContext);
   const param = useParams();
   const navigate = useNavigate();
-  const { nombre } = proyecto;
+  const { nombre, tareas } = proyecto;
 
   useEffect(() => {
     obtenerProyecto(param.id);
+    setMostrarModal(false);
   }, []);
+  useEffect(() => {}, [proyecto]);
   const onDelete = () => {
     if (
       confirm(
@@ -97,6 +100,13 @@ const Proyecto = () => {
             </svg>
           </button>
         </div>
+      )}
+      <h4>Tareas</h4>
+      {/* //?tareas evita errore en la consola si es false */}
+      {tareas?.length ? (
+        tareas?.map((tarea) => <TareaPreview key={tareas._id} tarea={tarea} />)
+      ) : (
+        <p>no hay tareas</p>
       )}
       <ModalTarea titulo="Agreagar Tarea" />
     </>

@@ -14,7 +14,6 @@ const ProyectosProvider = ({ children }) => {
     ubicacion: "",
     prioridad: "",
     tipo: "",
-    otroTipo: "",
     alcance: "",
     notaAdicional: "",
   };
@@ -23,6 +22,7 @@ const ProyectosProvider = ({ children }) => {
   const [proyecto, setProyecto] = useState({});
   const [cargando, setCargando] = useState(false); //TODO: PONER SPINNER CON ESTE STATE EN TRUE
   const [mostrarModal, setMostrarModal] = useState(false); //*MODAL DEL FORMULARIO DE TAREAS
+  const [modalNuevoProyecto, setModalNuevoProyecto] = useState(false);
 
   //*BLOQUE DE PROYECTOS
   const submitProyecto = async (proyecto) => {
@@ -113,27 +113,30 @@ const ProyectosProvider = ({ children }) => {
     }
   };
 
-  const cambiarModal = () => {
-    setMostrarModal(false);
-  };
   //*BLOQUE DE TAREAS
 
   const submitTarea = async (tarea) => {
-    console.log(tarea)
     try {
-     const token = localStorage.getItem("token");
-     if (!token) return;
+      const token = localStorage.getItem("token");
+      if (!token) return;
       const config = {
-         headers: {
-           "Content-Type": "application/json",
-           Authorization: `Bearer ${token}`,
-         },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       };
-       const { data } = await clienteAxios.post("/tareas", tarea, config);
-    //   console.log(data)
-     } catch (error) {
-    //   console.log(error);
-     }
+      const { data } = await clienteAxios.post("/tareas", tarea, config);
+      //COMO YA TENGO EL PROYECTO EN EL STATE SOLO LO ACTUALIZO, AGREGO LA TAERANUEVA PARA RENDERIZARLO SIN CONSULTAR LA API
+      const proyectoActualizado = {...proyecto}
+      proyectoActualizado = {...proyecto.tareas, data}
+      setProyecto(proyectoActualizado)
+    } catch (error) {
+      //   console.log(error);
+    }
+  };
+  //*BLOQUE DE MODALES
+  const cambiarModal = () => {
+    setMostrarModal(false);
   };
   return (
     <ProyectosContext.Provider
@@ -152,6 +155,8 @@ const ProyectosProvider = ({ children }) => {
         setMostrarModal,
         cambiarModal,
         submitTarea,
+        modalNuevoProyecto,
+        setModalNuevoProyecto,
       }}
     >
       {children}

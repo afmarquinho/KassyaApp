@@ -1,1 +1,1 @@
-export {default as NuevoProyecto} from'./NuevoProyecto'
+export {default as NuevoProyecto} from'./ModalNuevoProyecto'
