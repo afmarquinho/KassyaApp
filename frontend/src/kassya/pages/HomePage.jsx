@@ -20,7 +20,7 @@ const HomePage = () => {
     <>
       <KassyaLayout title="">
         <Contenedor>
-          <span class="loader"></span>
+          <span className="loader"></span>
         </Contenedor>
       </KassyaLayout>
     </>

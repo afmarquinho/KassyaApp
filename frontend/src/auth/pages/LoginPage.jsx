@@ -51,6 +51,7 @@ const LoginPage = () => {
               placeholder="correo"
               value={email}
               onChange={onInputChange}
+              autoComplete="username"
             />
           </div>
 
@@ -63,8 +64,10 @@ const LoginPage = () => {
               className="password"
               placeholder="contraseña"
               name="password"
+              autoComplete="current-password"
               value={password}
               onChange={onInputChange}
+
             />
           </div>
           <input
@@ -85,7 +88,7 @@ const LoginPage = () => {
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
+                xmlnsXlink="http://www.w3.org/1999/xlink"
                 viewBox="0 0 48 48"
                 width="25px"
                 height="25px"

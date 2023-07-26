@@ -104,7 +104,7 @@ const Proyecto = () => {
       <h4>Tareas</h4>
       {/* //?tareas evita errore en la consola si es false */}
       {tareas?.length ? (
-        tareas?.map((tarea) => <TareaPreview key={tareas._id} tarea={tarea} />)
+        tareas?.map((tarea) => <TareaPreview key={tarea._id} tarea={tarea} />)
       ) : (
         <p>no hay tareas</p>
       )}

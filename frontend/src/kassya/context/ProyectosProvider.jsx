@@ -1,4 +1,9 @@
-import { createContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useEffect,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import clienteAxios from "../../config/clienteAxios";
 const ProyectosContext = createContext();
 
@@ -23,6 +28,8 @@ const ProyectosProvider = ({ children }) => {
   const [cargando, setCargando] = useState(false); //TODO: PONER SPINNER CON ESTE STATE EN TRUE
   const [mostrarModal, setMostrarModal] = useState(false); //*MODAL DEL FORMULARIO DE TAREAS
   const [modalNuevoProyecto, setModalNuevoProyecto] = useState(false);
+  const [modalEditarTarea, setModalEditarTarea] = useState(false);
+  const [tarea, setTarea] = useState({});
 
   //*BLOQUE DE PROYECTOS
   const submitProyecto = async (proyecto) => {
@@ -127,17 +134,24 @@ const ProyectosProvider = ({ children }) => {
       };
       const { data } = await clienteAxios.post("/tareas", tarea, config);
       //COMO YA TENGO EL PROYECTO EN EL STATE SOLO LO ACTUALIZO, AGREGO LA TAERANUEVA PARA RENDERIZARLO SIN CONSULTAR LA API
-      const proyectoActualizado = {...proyecto}
-      proyectoActualizado = {...proyecto.tareas, data}
-      setProyecto(proyectoActualizado)
+      const proyectoActualizado = { ...proyecto };
+      proyectoActualizado = { ...proyecto.tareas, data };
+      setProyecto(proyectoActualizado);
     } catch (error) {
       //   console.log(error);
     }
   };
+  const onEditarTarea = (tarea) => {
+    setTarea(tarea);
+    setModalEditarTarea(true);
+    
+  };
+
   //*BLOQUE DE MODALES
   const cambiarModal = () => {
     setMostrarModal(false);
   };
+
   return (
     <ProyectosContext.Provider
       value={{
@@ -157,6 +171,11 @@ const ProyectosProvider = ({ children }) => {
         submitTarea,
         modalNuevoProyecto,
         setModalNuevoProyecto,
+        modalEditarTarea,
+        setModalEditarTarea,
+        tarea,
+        setTarea,
+        onEditarTarea,
       }}
     >
       {children}

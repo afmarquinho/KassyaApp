@@ -1,72 +1,55 @@
 import styled from "@emotion/styled";
-import useForm from "../../../auth/helpers/useForm";
-import Alerta from "../../../auth/components/Alerta";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import ProyectosContext from "../../context/ProyectosProvider";
+import useForm from "../../../auth/helpers/useForm";
 import { useParams } from "react-router-dom";
-import { areValuesNotEmpty } from "../../helpers/areValuesNotEmpty";
-import { isFutureDate } from "../../helpers/isFutureDate";
 
-const ModalTarea = ({ titulo = "Agregar Tarea" }) => {
-  const { mostrarModal, cambiarModal, setAlerta, alerta, submitTarea } =
-    useContext(ProyectosContext);
+const ModalEditarTarea = ({ titulo = "Editar Tarea" }) => {
+  //*------------------>VARIABLES<----------------------------
   const PRIORIDAD = ["Baja", "Medio", "Alta"];
-  const initialValues = {
-    nombre: "",
-    descripcion: "",
-    prioridad: "",
-  };
-  const { formValues, onInputChange, onReset } = useForm(initialValues);
   const param = useParams();
 
-  //*FUNCIONES
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    //*VALIDACIONES
-    const notEmpty = areValuesNotEmpty(formValues); //* CAMPOS NO VACÍOS
-    if (!notEmpty) {
-      setAlerta({
-        msg: "Debe diligenciar todos los campos",
-        error: true,
-      });
-      return;
-    }
-    const futureDate = isFutureDate(formValues.fechaEntrega); //* FECHA SEA FUTURA
-    if (!futureDate) {
-      setAlerta({
-        msg: "Introduzca una fecha válida",
-        error: true,
-      });
-      return;
-    }
-    formValues.nombre = formValues.nombre.trim().toUpperCase();
-    formValues.descripcion = formValues.descripcion.trim();
-    formValues.proyecto = param.id; //*AGREGO EL PARA AL OBJETO TAREAS PORQUE LO VOY A NECESITAR PARA MANDAR A LA API ( VER EL BACKEND)
+  const {
+    modalEditarTarea,
+    setModalEditarTarea,
+    tarea,
+    setTarea,
+    initialValues,
+    onEditarTarea,
+  } = useContext(ProyectosContext);
 
-    setAlerta({
-      msg: "¡Tarea guardada con éxito!",
-      ok: true,
-    });
-    await submitTarea(formValues);
-    setTimeout(() => {
-      setAlerta({}), onReset(initialValues);
-      cambiarModal();
-    }, 2000);
+  const values = {
+    nombre: tarea.nombre,
+    descripcion: tarea.descripcion,
+    fechaEntrega: tarea.fechaEntrega,
+    prioridad: tarea.prioridad,
   };
+
+  const { formValues, onInputChange, onReset } = useForm(values);
+
+  //*------------------>FUNCIONES<----------------------------
+
+  const cerrarModal = () => {
+    setModalEditarTarea(false);
+    setTarea({})
+  };
+  useEffect(() => {
+    console.log(formValues);
+  }, [tarea]);
   return (
     <>
-      {mostrarModal && (
+      {modalEditarTarea && (
         <Overlay>
           <Content>
             <Heading>
               <h2>{titulo}</h2>
-              <button onClick={cambiarModal}>
+              <button onClick={cerrarModal}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
                   height="16"
                   fill="currentColor"
-                  class="bi bi-x-lg"
+                  className="bi bi-x-lg"
                   viewBox="0 0 16 16"
                 >
                   <path
@@ -77,8 +60,8 @@ const ModalTarea = ({ titulo = "Agregar Tarea" }) => {
                 </svg>
               </button>
             </Heading>
-            {alerta.msg && <Alerta mensajeAlerta={alerta} />}
-            <Form onSubmit={onSubmit}>
+            {/* {alerta.msg && <Alerta mensajeAlerta={alerta} />} */}
+            <Form>
               <div className="input-group">
                 <label htmlFor="nombre">Nombre de la tarea</label>
                 <input
@@ -134,7 +117,7 @@ const ModalTarea = ({ titulo = "Agregar Tarea" }) => {
   );
 };
 
-export default ModalTarea;
+export default ModalEditarTarea;
 
 const Overlay = styled.div`
   position: fixed;

@@ -26,34 +26,34 @@ const ProyectosPage = () => {
               className="btn-proyecto btn-nuevoProyecto"
             >
               <svg
-                enable-background="new 0 0 128 128"
+                enableBackground="new 0 0 128 128"
                 id="Слой_1"
                 version="1.1"
                 height="60"
                 width="60"
                 viewBox="0 0 128 128"
-                xml:space="preserve"
+                xmlSpace="preserve"
                 xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
+                xmlnsXlink="http://www.w3.org/1999/xlink"
               >
                 <g>
                   <path
                     d="M6,104H2c0,9.4,7.6,17,17,17h107V17H21V2h-2C9.6,2,2,9.6,2,19v85L6,104c0-7.2,5.8-13,13-13h2V21h101v96H19   C11.8,117,6,111.2,6,104z M17,87.1c-4.4,0.5-8.3,2.7-11,5.9V19c0-6.5,4.8-11.9,11-12.8V87.1z"
                     fill="#3EBBC4"
                     // stroke="#3EBBC4"
-                    // stroke-width="3"
+                    // strokeWidth="3"
                   />
                   <path
                     d="M103,29H91v67.5l6,12l6-12V29z M99,33v11h-4V33H99z M97,99.5l-2-4V48h4v47.5L97,99.5z"
                     fill="#3EBBC4"
                     // stroke="#3EBBC4"
-                    // stroke-width="3"
+                    // strokeWidth="3"
                   />
                   <path
                     d="M42,77v4h8L45,108.7l3.9,0.7L54,81H66l5.1,28.4l3.9-0.7L70,81h8v-4h-8.7L67,63.8c3.1-2.2,5-5.9,5-9.8   c0-5.9-4.3-10.9-10-11.8V29h-4v13.2c-5.7,1-10,5.9-10,11.8c0,3.9,1.9,7.5,5,9.8L50.7,77H42z M56.2,61c-2.6-1.4-4.2-4.1-4.2-7   c0-4.4,3.6-8,8-8s8,3.6,8,8c0,2.9-1.6,5.6-4.2,7l-1.3,0.7L65.3,77H54.7l2.7-15.3L56.2,61z"
                     fill="#3EBBC4"
                     // stroke="#3EBBC4"
-                    // stroke-width="3"
+                    // strokeWidth="3"
                   />
                 </g>
               </svg>
@@ -64,15 +64,15 @@ const ProyectosPage = () => {
               className="btn-proyecto btn-misProyectos"
             >
               <svg
-                enable-background="new 0 0 128 128"
+                enableBackground="new 0 0 128 128"
                 id="Слой_1"
                 version="1.1"
                 height="60"
                 width="60"
                 viewBox="0 0 128 128"
-                xml:space="preserve"
+                xmlSpace="preserve"
                 xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
+                xmlnsXlink="http://www.w3.org/1999/xlink"
               >
                 <g>
                   <path
