@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Navbar from "../../layout/Navbar";
 import ModalTarea from "./ModalTarea";
 import TareaPreview from "./TareaPreview";
+import ModalEliminarTarea from "./ModalEliminarTarea";
 
 const Proyecto = () => {
   const {
@@ -109,6 +110,7 @@ const Proyecto = () => {
         <p>no hay tareas</p>
       )}
       <ModalTarea titulo="Agreagar Tarea" />
+      <ModalEliminarTarea/>
     </>
   );
 };

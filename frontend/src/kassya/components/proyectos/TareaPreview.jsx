@@ -1,21 +1,20 @@
 import styled from "@emotion/styled";
 import { formatearFecha } from "../../helpers/formatearFecha";
-import ModalEditarTarea from "./ModalEditarTarea";
 import { useContext, useEffect } from "react";
 import ProyectosContext from "../../context/ProyectosProvider";
-import { useState } from "react";
+import { Link } from "react-router-dom";
+
 
 const TareaPreview = ({ tarea }) => {
   //*------------------>VARIABLES<----------------------------
   const { nombre, descripcion, fechaEntrega, prioridad, _id, estado } = tarea;
-  const { setModalEditarTarea, onEditarTarea } = useContext(ProyectosContext);
-  const [values, setValues] = useState({});
+  const {  setTarea, onModalEliminarTarea } = useContext(ProyectosContext);
+
 
   //*------------------>FUNCIONES<----------------------------
   const editarTarea = () => {
-    onEditarTarea(tarea);
-  };
-
+    setTarea(tarea)
+  }
   return (
     <>
       <Div className="contenedor">
@@ -24,7 +23,8 @@ const TareaPreview = ({ tarea }) => {
         <p>Vencimiento: {formatearFecha(fechaEntrega)}</p>
         <p>Prioridad: {prioridad}</p>
         {estado ? <button>COMPLETA</button> : <button>INCOMPLETA</button>}
-        <button onClick={editarTarea}>
+        <Link to={`/proyecto/editar-tarea/${tarea._id}`} onClick={editarTarea}>
+          
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -42,8 +42,8 @@ const TareaPreview = ({ tarea }) => {
             />
           </svg>
           <span>EDITAR</span>
-        </button>
-        <button>
+        </Link>
+        <button onClick={()=> onModalEliminarTarea(tarea)}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -63,7 +63,7 @@ const TareaPreview = ({ tarea }) => {
           <span>ELIMINAR</span>
         </button>
       </Div>
-      <ModalEditarTarea />
+      
     </>
   );
 };

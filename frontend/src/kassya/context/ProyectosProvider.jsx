@@ -1,9 +1,4 @@
-import {
-  createContext,
-  useEffect,
-  useState,
-  useSyncExternalStore,
-} from "react";
+import { createContext, useState } from "react";
 import clienteAxios from "../../config/clienteAxios";
 const ProyectosContext = createContext();
 
@@ -28,7 +23,8 @@ const ProyectosProvider = ({ children }) => {
   const [cargando, setCargando] = useState(false); //TODO: PONER SPINNER CON ESTE STATE EN TRUE
   const [mostrarModal, setMostrarModal] = useState(false); //*MODAL DEL FORMULARIO DE TAREAS
   const [modalNuevoProyecto, setModalNuevoProyecto] = useState(false);
-  const [modalEditarTarea, setModalEditarTarea] = useState(false);
+  const [modalEliminarTarea, setModalEliminarTarea] = useState(false);
+
   const [tarea, setTarea] = useState({});
 
   //*BLOQUE DE PROYECTOS
@@ -141,15 +137,45 @@ const ProyectosProvider = ({ children }) => {
       //   console.log(error);
     }
   };
-  const onEditarTarea = (tarea) => {
-    setTarea(tarea);
-    setModalEditarTarea(true);
-    
+  const onEditarTarea = async (tarea, id) => {
+    console.log(tarea);
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await clienteAxios.put(`/tareas/${id}`, tarea, config);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
+  const onEliminarTarea = async (tarea) => {
+    setModalEliminarTarea(!modalEliminarTarea);
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const {data} = await clienteAxios.delete(`/tareas/${tarea._id}`, config);
+      console.log(data)
+    } catch (error) {}
+  };
   //*BLOQUE DE MODALES
   const cambiarModal = () => {
     setMostrarModal(false);
+  };
+  const onModalEliminarTarea = (tarea = {}) => {
+    setTarea(tarea);
+    setModalEliminarTarea(!modalEliminarTarea);
   };
 
   return (
@@ -171,11 +197,13 @@ const ProyectosProvider = ({ children }) => {
         submitTarea,
         modalNuevoProyecto,
         setModalNuevoProyecto,
-        modalEditarTarea,
-        setModalEditarTarea,
         tarea,
         setTarea,
         onEditarTarea,
+        onModalEliminarTarea,
+        modalEliminarTarea,
+        setModalEliminarTarea,
+        onEliminarTarea,
       }}
     >
       {children}

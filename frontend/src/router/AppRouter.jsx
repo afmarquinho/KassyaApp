@@ -25,7 +25,7 @@ import AuthContext from "../auth/context/AuthProvider";
 import MisProyectos from "../kassya/components/proyectos/MisProyectos";
 import Proyecto from "../kassya/components/proyectos/Proyecto";
 import EditarProyecto from "../kassya/components/proyectos/EditarProyecto";
-
+import EditarTarea from "../kassya/components/proyectos/EditarTarea";
 
 const AppRouter = () => {
   const { isAuthenticated } = useContext(AuthContext);
@@ -63,8 +63,9 @@ const AppRouter = () => {
             {/* <Route path="mis-proyectos" element={<MisProyectos />} /> */}
           </Route>
           <Route path="proyectos/mis-proyectos" element={<MisProyectos />} />
-          <Route path="proyectos/mis-proyectos/proyecto/:id" element={<Proyecto />} />
+          <Route path="proyectos/mis-proyectos/proyecto/:id" element={<Proyecto />}/>
           <Route path="proyecto/editar/:id" element={<EditarProyecto />} />
+          <Route path="proyecto/editar-tarea/:id" element={<EditarTarea />} />          
           <Route path="RRHH" element={<RRHHPage />} />
           <Route path="serv-cliente" element={<ServicioClientePage />} />
           <Route path="ventas" element={<VentasPage />} />
